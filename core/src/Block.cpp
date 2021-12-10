@@ -5,11 +5,6 @@ Block::Block(std::vector<Transaction> t, std::string prev_hash, uint32_t height)
 	this -> transactions = t;
 	this -> prev_hash = prev_hash;
 
-	/* 
-	* Index is not defined yet.
-	* I'll figure that out later.
-	*/
-
 	this -> hash = this -> calculate_hash();
 	time_t now = time(0);
 	this -> timestamp = ctime(&now);
@@ -51,7 +46,7 @@ std::string Block::get_prev_hash() {
 }
 
 
-const char* Block::get_timestamp() {
+std::string Block::get_timestamp() {
 	return this -> timestamp;
 }
 
@@ -68,6 +63,9 @@ void Block::mine(unsigned int difficulty) {
 	for (int i = 0; i < sizeof(arr); ++i) {
 		hash_puzzle += std::to_string(arr[i]);		
 	}
+
+	std::cout << "Preparing to mine blocks.." << std::endl;
+	sleep(2);
 
 	while (1) {
 		std::string hash_slice = "";

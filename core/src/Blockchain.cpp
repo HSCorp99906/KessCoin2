@@ -6,6 +6,11 @@ Blockchain::Blockchain() {
 	this -> temp_node = this -> current_node;
 	this -> current_node -> next = NULL;
 	this -> height = 0;
+	this -> lastHash = "";
+
+	for (int i = 0; i < 64; ++i) {
+		this -> lastHash += '0';
+	}
 }
 
 
@@ -31,29 +36,14 @@ void Blockchain::add_block(Block* blk) {
 }
 
 
-Block Blockchain::get_prev_block() {
-	uint32_t currentHeight = 0;
-	BlockNode* curNode = this -> head_node;
-
-	while (currentHeight != this -> height) {
-		curNode = curNode -> next;
-
-		if (currentHeight == this -> height - 1) {
-			break;
-		}
-
-		if (curNode == NULL) {
-			break;
-		}
-
-		++currentHeight;
-	}
-
-	return *curNode -> block;
+void Blockchain::add_pending_transactions(std::vector<Transaction> t) {
+	this -> pending_transactions = t;
 }
 
 
 void Blockchain::mine_pending_transactions() {
-	Block newBlock(this -> pending_transactions, this -> get_prev_block().gethash(), this -> height);
-	newBlock.mine(2);  // 2 for now.
+	std::string hash = "00000";
+	std::vector<Transaction> t = {};
+	Block newBlock(t, this -> lastHash, this -> height);
+	// newBlock.mine(2);  // 2 for now.
 }

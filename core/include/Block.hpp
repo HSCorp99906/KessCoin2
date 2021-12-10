@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <signal.h>
+#include <unistd.h>
 #include "Transaction.hpp"
 #include "picosha2.h"
 
@@ -14,7 +14,7 @@ class Block {
 	private:
 		uint32_t index;
 		std::vector<Transaction> transactions;
-		const char* timestamp;
+		std::string timestamp;
 		std::string hash;
 		std::string prev_hash;
 		uint64_t nonce;
@@ -27,7 +27,7 @@ class Block {
 		std::string gethash();
 		std::string get_prev_hash();
 
-		const char* get_timestamp();
+		std::string get_timestamp();
 };
 
 

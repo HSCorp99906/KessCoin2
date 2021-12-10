@@ -100,6 +100,7 @@ int main() {
 			std::cout << "To Address: " << t.get_r_addr() << std::endl;
 			std::cout << "From Address: " << t.get_s_addr() << std::endl;
 			std::cout << "Hash: " << t.get_hash() << std::endl;
+			std::cout << "Transactions: " << transactions.size() << std::endl;
 			std::cout << "***************************************" << std::endl;
 
 			if (transactions.size() == MAX_TRANSACTION_PER_BLOCK) {
@@ -116,17 +117,10 @@ int main() {
 				ss1 >> blocknoint;
 				blkno.close();  // Closes blkno file stream.
 
-				if (blocknoint == 0) {  // If block number is 0 then this is genesis block.
-					std::string gblockprevhash = "";
-
-					for (int i = 0; i < 64; ++i) {
-						gblockprevhash += '0';  // Fill hash with 0's.
-					}
-
-					Block gblock = clog_block(gblockprevhash, blocknoint, transactions);
-				} else {
-					// Do nothing for now.
-				}
+				kcBlockchain -> add_pending_transactions(transactions);   // Adds all transactions to blockchain as pending.
+				std::cout << "********* MTPB REACHED, ADDED TO BLOCKCHAIN AS PENDING **********" << std::endl;
+				transactions.clear();
+				kcBlockchain -> mine_pending_transactions();
 			}
 
 			char command[55];
