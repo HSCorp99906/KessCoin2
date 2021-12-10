@@ -21,6 +21,37 @@ void die(int dummy) {
 }
 
 
+Block clog_block(std::string prevhash, uint32_t height, std::vector<Transaction> transactions) { 
+	// Create and log block.
+	Block newblock = Block(transactions, prevhash, height);
+
+	std::cout << "************* MTPB REACHED, BLOCK CREATED. *************" << std::endl;
+	std::cout << "Height: " << height << std::endl;
+	std::cout << "Hash: " << newblock.gethash() << std::endl;
+	std::cout << "Prev Hash: " << newblock.get_prev_hash() << std::endl;
+	std::cout << "Timestamp: " << newblock.get_timestamp() << std::endl;
+	std::cout << "********************************************************" << std::endl;
+
+	char filepath[55];
+	char command[55];
+
+	sprintf(command, "touch ../info/blockinfo/blocks/block-%d.log", height);
+	system(command);
+
+	sprintf(filepath, "touch ../info/blockinfo/blocks/block-%d.log", height);
+	std::ofstream blocklog;
+	blocklog.open(filepath);
+
+	blocklog << "Height: " << height << "\n";
+	blocklog << "Hash: " << newblock.gethash() << "\n";
+	blocklog << "Prev Hash: " << newblock.get_prev_hash() << "\n";
+	blocklog << "Timestamp: " << newblock.get_timestamp() << "\n";
+	blocklog.close();
+
+	return newblock;
+
+}
+
 
 
 int main() {
@@ -71,13 +102,40 @@ int main() {
 			std::cout << "Hash: " << t.get_hash() << std::endl;
 			std::cout << "***************************************" << std::endl;
 
+			if (transactions.size() == MAX_TRANSACTION_PER_BLOCK) {
+				std::ifstream blkno;
+				blkno.open("../info/blockinfo/blockno");
+
+				std::string blknostr;
+				uint32_t blocknoint;
+
+				std::getline(blkno, blknostr);
+
+				std::stringstream ss1;
+				ss1 << blknostr;
+				ss1 >> blocknoint;
+				blkno.close();  // Closes blkno file stream.
+
+				if (blocknoint == 0) {  // If block number is 0 then this is genesis block.
+					std::string gblockprevhash = "";
+
+					for (int i = 0; i < 64; ++i) {
+						gblockprevhash += '0';  // Fill hash with 0's.
+					}
+
+					Block gblock = clog_block(gblockprevhash, blocknoint, transactions);
+				} else {
+					// Do nothing for now.
+				}
+			}
+
 			char command[55];
-			sprintf(command, "touch ../info/transactions/transaction-%d", transactionindex);
+			sprintf(command, "touch ../info/transactions/transaction-%d.log", transactionindex);
 			system(command);
 			std::ofstream tfile;
 
 			char filename[50];
-			sprintf(filename, "../info/transactions/transaction-%d", transactionindex);
+			sprintf(filename, "../info/transactions/transaction-%d.log", transactionindex);
 
 			tfile.open(filename, std::ios_base::app);
 
