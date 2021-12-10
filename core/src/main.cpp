@@ -121,6 +121,7 @@ int main() {
 				std::cout << "********* MTPB REACHED, ADDED TO BLOCKCHAIN AS PENDING **********" << std::endl;
 
 				kcBlockchain -> mine_pending_transactions();
+				transactions.clear();
 			}
 
 			char command[55];
