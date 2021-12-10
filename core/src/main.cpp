@@ -119,7 +119,7 @@ int main() {
 
 				kcBlockchain -> add_pending_transactions(transactions);   // Adds all transactions to blockchain as pending.
 				std::cout << "********* MTPB REACHED, ADDED TO BLOCKCHAIN AS PENDING **********" << std::endl;
-				transactions.clear();
+
 				kcBlockchain -> mine_pending_transactions();
 			}
 

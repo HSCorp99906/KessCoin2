@@ -25,7 +25,7 @@ std::string Block::calculate_hash() {
 		header_bin += std::to_string(this -> transactions[i].get_amount());
 		header_bin += this -> transactions[i].get_timestamp();
 		header_bin += this -> transactions[i].get_hash();
-		header_bin += this -> nonce;
+		header_bin += std::to_string(this -> nonce);
 	}
 
 	std::string hash;
@@ -52,19 +52,14 @@ std::string Block::get_timestamp() {
 
 
 void Block::mine(unsigned int difficulty) {
-	unsigned int arr[difficulty];
+	std::string hash_puzzle = "";
+	std::cout << "SIZE: " << this -> transactions.size() << std::endl;
 
 	for (int i = 0; i < difficulty; ++i) {
-		arr[i] = i;
+		hash_puzzle += std::to_string(i);
 	}
 
-	std::string hash_puzzle = "";
-
-	for (int i = 0; i < sizeof(arr); ++i) {
-		hash_puzzle += std::to_string(arr[i]);		
-	}
-
-	std::cout << "Preparing to mine blocks.." << std::endl;
+	std::cout << "\n\nPreparing to mine blocks.." << std::endl;
 	sleep(2);
 
 	while (1) {
@@ -81,7 +76,7 @@ void Block::mine(unsigned int difficulty) {
 		std::cout << "Hash we want: " << hash_puzzle << ".." << std::endl;
 
 		if (hash_slice == hash_puzzle) {
-			std::cout << "Block mined! Nonce: " << this -> nonce << std::endl;
+			std::cout << "\n\nBlock mined! Nonce: " << this -> nonce << std::endl;
 			this -> mined = true;
 			break;
 		}

@@ -42,8 +42,6 @@ void Blockchain::add_pending_transactions(std::vector<Transaction> t) {
 
 
 void Blockchain::mine_pending_transactions() {
-	std::string hash = "00000";
-	std::vector<Transaction> t = {};
-	Block newBlock(t, this -> lastHash, this -> height);
-	// newBlock.mine(2);  // 2 for now.
+	Block newBlock(this -> pending_transactions, this -> lastHash, this -> height);
+	newBlock.mine(4);  // 2 for now.
 }
