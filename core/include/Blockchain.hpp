@@ -7,6 +7,8 @@
 #include <vector>
 #include <cstdint>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 #define REWARD_AMOUNT 150
 
@@ -20,13 +22,15 @@ class Blockchain {
 		uint32_t height;
 		std::string lastHash;
 
+		void add_block(Block* blk);
+
 	public:
 		Blockchain();
 		~Blockchain();
 
 		void mine_pending_transactions();
-		void add_block(Block* blk);
-
+		
+		void increment_height();
 		void add_pending_transactions(std::vector<Transaction> t);
 
 		Block get_prev_block();

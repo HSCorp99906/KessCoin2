@@ -5,7 +5,23 @@ Blockchain::Blockchain() {
 	this -> head_node = this -> current_node;
 	this -> temp_node = this -> current_node;
 	this -> current_node -> next = NULL;
-	this -> height = 0;
+	
+	std::ifstream blockno;
+	blockno.open("../info/blockinfo/blockno");
+
+	uint32_t blknoint;
+	std::string blknostr;
+	std::getline(blockno, blknostr);
+
+	std::stringstream ss;
+	ss << blknostr;
+	ss >> blknoint;
+
+	blockno.close();
+
+	this -> height = blknoint;
+
+
 	this -> lastHash = "";
 
 	for (int i = 0; i < 64; ++i) {
@@ -41,7 +57,22 @@ void Blockchain::add_pending_transactions(std::vector<Transaction> t) {
 }
 
 
+void Blockchain::increment_height() {
+	std::ofstream of;
+	of.open("../info/blockinfo/blockno");
+	of << ++this -> height;
+	of.close();
+}
+
+
 void Blockchain::mine_pending_transactions() {
-	Block newBlock(this -> pending_transactions, this -> lastHash, this -> height);
-	newBlock.mine(4);  // 2 for now.
+	Block* newBlock = new Block(this -> pending_transactions, this -> lastHash, this -> height);
+	newBlock -> mine(4);  // 2 for now.
+	this -> add_block(newBlock);
+	std::cout << "********** BLOCK ADDED TO BLOCKCHAIN **********" << std::endl;
+	std::cout << "Hash: " << newBlock -> gethash() << std::endl;
+	std::cout << "Previous Hash: " << newBlock -> get_prev_hash() << std::endl;
+	std::cout << "Timestamp: " << newBlock -> get_timestamp() << std::endl;
+	std::cout << "***********************************************" << std::endl;
+	this -> lastHash = newBlock -> gethash();
 }

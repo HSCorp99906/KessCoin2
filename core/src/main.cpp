@@ -104,19 +104,6 @@ int main() {
 			std::cout << "***************************************" << std::endl;
 
 			if (transactions.size() == MAX_TRANSACTION_PER_BLOCK) {
-				std::ifstream blkno;
-				blkno.open("../info/blockinfo/blockno");
-
-				std::string blknostr;
-				uint32_t blocknoint;
-
-				std::getline(blkno, blknostr);
-
-				std::stringstream ss1;
-				ss1 << blknostr;
-				ss1 >> blocknoint;
-				blkno.close();  // Closes blkno file stream.
-
 				kcBlockchain -> add_pending_transactions(transactions);   // Adds all transactions to blockchain as pending.
 				std::cout << "********* MTPB REACHED, ADDED TO BLOCKCHAIN AS PENDING **********" << std::endl;
 
