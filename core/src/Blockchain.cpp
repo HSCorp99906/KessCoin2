@@ -1,10 +1,12 @@
 #include "../include/Blockchain.hpp"
 
+
 Blockchain::Blockchain() {
 	this -> current_node = new BlockNode;
 	this -> head_node = this -> current_node;
 	this -> temp_node = this -> current_node;
 	this -> current_node -> next = NULL;
+	this -> tempStorageActive = false;
 	
 	std::ifstream blockno;
 	blockno.open("../info/blockinfo/blockno");
@@ -57,6 +59,14 @@ void Blockchain::add_pending_transactions(std::vector<Transaction> t) {
 }
 
 
+void Blockchain::delete_temp_storage() {
+	if (tempStorageActive) {
+		std::cout << "\n\nPlease be careful abnormally halting process." << std::endl;
+		delete this -> tempStorage;
+	}
+}
+
+
 void Blockchain::increment_height() {
 	std::ofstream of;
 	of.open("../info/blockinfo/blockno");
@@ -66,7 +76,10 @@ void Blockchain::increment_height() {
 
 
 void Blockchain::mine_pending_transactions() {
+	this -> tempStorageActive = true;
 	Block* newBlock = new Block(this -> pending_transactions, this -> lastHash, this -> height);
+	this -> tempStorage = newBlock;
+
 	newBlock -> mine(4);  // 2 for now.
 	this -> add_block(newBlock);
 	std::cout << "********** BLOCK ADDED TO BLOCKCHAIN **********" << std::endl;

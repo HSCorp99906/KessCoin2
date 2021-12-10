@@ -16,6 +16,7 @@
 Blockchain* kcBlockchain;
 
 void die(int dummy) {
+	kcBlockchain -> delete_temp_storage();
 	delete kcBlockchain;
 	exit(0);
 }

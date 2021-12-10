@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 
+
 #define REWARD_AMOUNT 150
 
 
@@ -22,6 +23,9 @@ class Blockchain {
 		uint32_t height;
 		std::string lastHash;
 
+		bool tempStorageActive;
+		Block* tempStorage;
+
 		void add_block(Block* blk);
 
 	public:
@@ -32,6 +36,8 @@ class Blockchain {
 		
 		void increment_height();
 		void add_pending_transactions(std::vector<Transaction> t);
+
+		void delete_temp_storage();
 
 		Block get_prev_block();
 };
