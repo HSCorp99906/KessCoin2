@@ -8,6 +8,18 @@ Blockchain::Blockchain() {
 }
 
 
+Blockchain::~Blockchain() {
+	BlockNode* curNode = this -> head_node;
+	BlockNode* nextNode;
+
+	while (curNode != NULL) {
+		nextNode = curNode -> next;
+		delete curNode;
+		curNode = nextNode;
+	}
+}
+
+
 void Blockchain::add_block(Block* blk) {
 	this -> current_node = new BlockNode;
 	this -> current_node -> block = blk;

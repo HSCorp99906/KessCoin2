@@ -13,6 +13,7 @@ class Blockchain {
 
 	public:
 		Blockchain();
+		~Blockchain();
 
 		void add_block(Block* blk);
 };

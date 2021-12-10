@@ -35,3 +35,8 @@ std::string Block::calculate_hash() {
 
 	return hash;
 }
+
+
+std::string Block::gethash() {
+	return this -> hash;
+}

@@ -20,6 +20,8 @@ class Block {
 
 	public:
 		Block(std::vector<Transaction> t, std::string prev_hash);
+
+		std::string gethash();
 };
 
 
