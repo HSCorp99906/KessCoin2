@@ -4,7 +4,8 @@
 #include <string>
 #include <ctime>
 #include "picosha2.h"
-
+#include <fstream>
+#include <cstdint>
 
 class Transaction {
 	private:

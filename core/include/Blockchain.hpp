@@ -4,7 +4,6 @@
 #include "BlockNode.hpp"
 #include "Block.hpp"
 
-
 class Blockchain {
 	private:
 		BlockNode* head_node;

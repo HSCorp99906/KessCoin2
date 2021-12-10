@@ -2,13 +2,14 @@
 
 
 Transaction::Transaction(std::string senderAddr, std::string recvAddr, float amount) {
+	static uint64_t index = 0;
+
 	this -> senderAddr = senderAddr;
 	this -> recieverAddr = recvAddr;
 	this -> amount = amount;
 
 	time_t now = time(0);
 	this -> timestamp = ctime(&now);
-
 	this -> hash = this -> calculateHash();
 }
 
