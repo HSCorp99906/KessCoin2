@@ -78,17 +78,22 @@ int main(int argc, char* argv[]) {
 
 		fclose(ftpfile.stream);
 	}
+	
+	if (argv[5]) {
+		if (strcmp(argv[5], "cat") == 0) {
+			FILE* fp = fopen(argv[3], "r");
+			size_t lineBufSize = 5;
+			char* lineBuf = (char*)malloc(sizeof(char) * lineBufSize);
 
-	if (argv[5] == "cat") {
-		FILE* fp = fopen(argv[3], "r");
-		size_t lineBufSize = 5;
-		char* lineBuf = (char*)malloc(sizeof(char) * lineBufSize);
+			while (getline(&lineBuf, &lineBufSize, fp) != -1) {
+				printf("%s", lineBuf);
+			}
 
-		while (getline(&lineBuf, &lineBufSize, fp) != -1) {
-			printf("%s", lineBuf);
+			free(lineBuf);
+			char rmcmd[50];
+			sprintf(rmcmd, "rm %s", argv[3]);
+			system(rmcmd);
 		}
-
-		free(lineBuf);
 	}
 
 	curl_global_cleanup();
