@@ -22,7 +22,7 @@ size_t m_fwrite(void* buffer, size_t size, size_t nmemb, void* stream) {
 }
 
 
-int main(int argc, char** argv[]) {
+int main(int argc, char* argv[]) {
 	CURL* curl;
 	CURLcode res;
 
