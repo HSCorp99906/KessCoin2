@@ -82,7 +82,7 @@ void Blockchain::mine_pending_transactions() {
 
 	newBlock -> mine(4);  // 2 for now.
 	this -> add_block(newBlock);
-	std::cout << "********** BLOCK ADDED TO BLOCKCHAIN **********" << std::endl;
+	std::cout << "\n********** BLOCK ADDED TO BLOCKCHAIN **********" << std::endl;
 	std::cout << "Hash: " << newBlock -> gethash() << std::endl;
 	std::cout << "Previous Hash: " << newBlock -> get_prev_hash() << std::endl;
 	std::cout << "Timestamp: " << newBlock -> get_timestamp() << std::endl;
