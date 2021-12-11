@@ -51,6 +51,22 @@ void Blockchain::add_block(Block* blk) {
 	this -> temp_node -> next = this -> current_node;
 	this -> temp_node = this -> current_node;
 	this -> current_node -> next = NULL;
+	std::ifstream blocknum;
+	blocknum.open("../info/blockinfo/blockno");
+	std::string blockno = "";
+	std::getline(blocknum, blockno);
+	std::stringstream ss;
+	ss << blockno;
+	uint64_t blockindex;
+	ss >> blockindex;
+	++blockindex;
+
+	std::ofstream outfile;
+	outfile.open("../info/blockinfo/blockno");
+	outfile << std::to_string(blockindex);
+
+	outfile.close();
+	blocknum.close();
 }
 
 
