@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	struct File ftpfile = {
-		.filename = argv[3],
+		.filename = "newtransaction",
 		.stream = NULL
 	};
 
@@ -82,13 +82,12 @@ int main(int argc, char* argv[]) {
 				fputs(json, fp);
 				fclose(fp);
 
-				system("curl -d @data.json -H 'Content-Type: application/json' INSERT SERVER WEBHOOK HERE");
+				system("curl -d @data.json -H 'Content-Type: application/json' WEBHOOK_URL");
 				system("rm data.json");
-
-				return 0;
+				system("mv newtransaction ../core/info");
 			}
 
-			sleep(8);
+			sleep(15);
 		}
 	}
 
