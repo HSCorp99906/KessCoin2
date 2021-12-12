@@ -55,8 +55,8 @@ Then you `cd` into `util/build` and do `chmod +x build.sh`, and then `./build.sh
 
 # Contributors:
 
-[K1ZANA](https://github.com/K1ZANA)__
-[GamerCoder215](https://github.com/GamerCoder215)__
-[CrazyVibes07](https://github.com/CrazyVibes07)__
-[DoomLibreGuy](https://github.com/DoomLibreGuy)__
-[Skyde](https://github.com/Skyd1)__
+[K1ZANA](https://github.com/K1ZANA)<br />
+[GamerCoder215](https://github.com/GamerCoder215)<br />
+[CrazyVibes07](https://github.com/CrazyVibes07)<br />
+[DoomLibreGuy](https://github.com/DoomLibreGuy)<br />
+[Skyde](https://github.com/Skyd1)
