@@ -7,7 +7,7 @@
                 const xhr = new XMLHttpRequest();
                 xhr.open("GET", "/freetransaction.php");
                 xhr.send(null);
-				document.cookie = 'tcansend=; Max-Age=0; path=/; domain=' + location.host;
+		document.cookie = 'tcansend=; Max-Age=0; path=/; domain=' + location.host;
             }
 
 	    let confirmtransaction = () => {
