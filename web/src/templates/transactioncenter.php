@@ -16,7 +16,7 @@
 	 	        } else {
 			        document.cookie = "confirm=true";
 		        }
-	    }
+	        }
         </script>
 
 		<?php
