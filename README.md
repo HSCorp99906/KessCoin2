@@ -23,9 +23,9 @@ That’s called mining, once the block is mined you get a reward of 5 **KC** and
 - Skyde (Co-Founder of KessCoin)
 
 ## How do you build KessCoin?
-Easy! You need to have `cpp` installed.
+Easy! You need to have a `cpp compiler` installed.
 
-### How do you install `cpp`?
+### How do you install `a cpp compiler`?
 
 **Debian-based Distros**:
 `$ sudo apt install g++`
