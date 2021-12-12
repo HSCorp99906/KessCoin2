@@ -41,11 +41,6 @@ Easy! You need to have `cpp` installed.
 or
 `yay -S gcc`
 
-**Windows**:
-You *need* to have `scoop` installed for this.
-The tutorial on how to install `scoop` is [_here_](https://scoop.sh).
-`scoop install gcc`
-
 ##### If you did that....
 You just need to clone the repo, `cd` into the folder `KessCoin2/core/build` and do `chmod +x build.sh`, and then `./build.sh`.
 This builds the **core**.
