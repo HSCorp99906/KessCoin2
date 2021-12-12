@@ -10,19 +10,19 @@
 				document.cookie = 'tcansend=; Max-Age=0; path=/; domain=' + location.host;
             }
 
-			let confirmtransaction = () => {
-				if (!(window.confirm("Are you sure you want to make a transaction?"))) {
-					document.cookie = "confirm=false";
-				} else {
-					document.cookie = "confirm=true";
-				}
-			}
+	    let confirmtransaction = () => {
+		if (!(window.confirm("Are you sure you want to make a transaction?"))) {
+			document.cookie = "confirm=false";
+		} else {
+			document.cookie = "confirm=true";
+		}
+	    }
         </script>
 
 		<?php
-			if (isset($_COOKIE['visited'])) {   // Prevents re-visiting after awhile.
-				header("Location: /");
-			}
+		    if (isset($_COOKIE['visited'])) {   // Prevents re-visiting after awhile.
+			header("Location: /");
+		    }
 		?>
 
     </head>
