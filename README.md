@@ -16,6 +16,9 @@ That’s where the Proof Of Work algorithm comes in, we use what’s called a no
 
 That’s called mining, once the block is mined you get a reward of 5 **KC** and the block is added to the blockchain.
 
+"KessCOIN goes brrrrr"
+-DoomLibreGuy (Project Developer)
+
 "Think Twice, Not Once."
 - Ian Marco Moffett (Founder of KessCoin)
 
