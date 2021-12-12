@@ -45,6 +45,7 @@
                 $tinfo .= $_GET['fa'];
                 $tinfo .= PHP_EOL;
                 $tinfo .= $_GET['amt'];
+				echo $tinfo;
                 fwrite($transaction, $tinfo, strlen($tinfo));
                 fclose($transaction);
                 sleep(11);
