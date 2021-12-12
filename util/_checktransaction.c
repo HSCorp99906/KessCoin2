@@ -28,10 +28,18 @@ size_t m_fwrite(void* buffer, size_t size, size_t nmemb, void* stream) {
 }
 
 
+void die() {
+	curl_global_cleanup();
+	exit(0);
+}
+
+
 int main(int argc, char* argv[]) {
 	CURL* curl;
 	CURLcode res;
 
+	signal(SIGINT, die);
+		
 	if (argc < 3) {
 		printf("Usage: %s <username> <password>\n", argv[0]);
 		return 0;
@@ -50,7 +58,7 @@ int main(int argc, char* argv[]) {
 	curl = curl_easy_init();
 
 	if (curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, "ftp.guardianhost.org/public_html/newtransaction");
+		curl_easy_setopt(curl, CURLOPT_URL, "ftp://ftp.guardianhost.org/public_html/newtransaction");
 		curl_easy_setopt(curl, CURLOPT_USERPWD, usrpass);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, m_fwrite);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &ftpfile);
@@ -82,12 +90,14 @@ int main(int argc, char* argv[]) {
 				fputs(json, fp);
 				fclose(fp);
 
-				system("curl -d @data.json -H 'Content-Type: application/json' WEBHOOK_URL");
+				system("curl -d @data.json -H 'Content-Type: application/json' YOUR WEBHOOK");
 				system("rm data.json");
+				system("bin/readt");
+				sleep(1);
 				system("mv newtransaction ../core/info");
 			}
 
-			sleep(15);
+			sleep(10);
 		}
 	}
 
