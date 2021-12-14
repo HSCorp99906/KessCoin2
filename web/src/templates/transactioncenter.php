@@ -41,6 +41,12 @@
             <button type="submit" style="border-radius: 500px" onclick="confirmtransaction()">Submit</button>
         </form>
 
+		<?php
+			while (file_exists("newtransaction")) {
+				sleep(5);
+			}
+		?>
+
         <?php
             $lenta = strlen($_POST["ta"]);
             $lenfa = strlen($_POST["fa"]);

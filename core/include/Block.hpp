@@ -22,13 +22,12 @@ class Block {
 		bool mined;
 	public:
 		Block(std::vector<Transaction> t, std::string prev_hash, uint32_t height);
-
+		
 		void mine(unsigned int difficulty);
 		std::string gethash();
 		std::string get_prev_hash();
 
 		std::string get_timestamp();
 };
-
 
 #endif

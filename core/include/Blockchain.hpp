@@ -22,6 +22,8 @@ class Blockchain {
 		std::vector<Transaction> pending_transactions;
 		uint32_t height;
 		std::string lastHash;
+		
+		Block* genesis;
 
 		bool tempStorageActive;
 		Block* tempStorage;

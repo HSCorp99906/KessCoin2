@@ -22,17 +22,21 @@ Blockchain::Blockchain() {
 	blockno.close();
 
 	this -> height = blknoint;
-
-
 	this -> lastHash = "";
 
-	for (int i = 0; i < 64; ++i) {
-		this -> lastHash += '0';
-	}
+	// TODO: Make blocks & transactions get restored if crash occurs (unlikely)
+	Block* genesis = new Block({}, "0000000000000000000000000000000000000000000000000000000000000000", 0);
+
+	this -> lastHash = genesis -> gethash();
+	this -> add_block(genesis);
+
 }
 
 
 Blockchain::~Blockchain() {
+	delete this -> genesis;
+	this -> genesis = NULL;
+
 	BlockNode* curNode = this -> head_node;
 	BlockNode* nextNode;
 
