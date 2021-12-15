@@ -51,3 +51,13 @@ const char* Transaction::get_timestamp() {
 std::string Transaction::get_hash() {
 	return this -> hash;
 }
+
+
+void Transaction::sign() {
+	char cmd[150];
+	sprintf(cmd, "echo \"%s\" > tmp/transactionhash", this -> get_hash());
+	system(cmd);
+	system("bash keygen.sh");
+	system("bash sign.sh tmp/transactionhash");
+	system("rm keys/*");
+}

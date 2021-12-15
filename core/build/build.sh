@@ -4,4 +4,3 @@
 
 echo "Building..."
 g++ ../src/*.cpp -o ../bin/main
-gcc ../src/*.c -lssl -lcrypto -w -o ../bin/keygen

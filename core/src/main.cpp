@@ -128,6 +128,7 @@ int main() {
 			tfile << "Hash: " << t.get_hash() << "\n";
 
 			tfile.close();
+			t.sign();
 			system("rm ../info/newtransaction");
 			++transactionindex;
 		}

@@ -3,4 +3,4 @@
 # Buildscript for KessCoin2
 
 echo "Building..."
-g++ ../checktransaction.c -o ../bin/main -lcurl
+gcc ../checktransaction.c -o ../bin/main -lcurl

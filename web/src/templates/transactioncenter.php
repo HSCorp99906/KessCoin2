@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Transaction Center</title>
+        <title>Transaction Center</title> 
         <script>
             // Frees resources if user closes
             window.onbeforeunload = () => {
@@ -38,7 +38,7 @@
             <input type="text" name="fa"><br>
             <label for="amount">Amount</label>
             <input type="text" name="amt"><br>
-            <button type="submit" style="border-radius: 500px" onclick="confirmtransaction()">Submit</button>
+            <button type="submit" id="submit" style="border-radius: 500px" onclick="confirmtransaction()">Submit</button>
         </form>
 
 		<?php
@@ -67,8 +67,16 @@
                 $tinfo .= $_POST['amt'];
                 fwrite($transaction, $tinfo, strlen($tinfo));
                 fclose($transaction);
-                sleep(11);
+                sleep(20);
                 unlink("newtransaction");
+				$cur_id = rand();
+				$rn1 = rename("../secrets/sha1.sign", "../secrets/sha1-$cur_id.sign");
+				$rn2 = rename("../secrets/newtransaction", "../secrets/transaction-$cur_id");
+		
+				if (rn1 == false || rn2 == false) {
+					echo "<br>ERROR</br>";
+				}
+
                 echo "Your transaction has finished processing, you may exit this page.<br>";
 				echo "<strong>Please do not reload or your transaction might be repeated.</strong>";
             } elseif ($_COOKIE['confirm'] == "false") {

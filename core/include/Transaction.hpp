@@ -6,6 +6,7 @@
 #include "picosha2.h"
 #include <fstream>
 #include <cstdint>
+#include <fstream>
 
 class Transaction {
 	private:
@@ -25,6 +26,8 @@ class Transaction {
 		float get_amount();
 		const char* get_timestamp();
 		std::string get_hash();
+
+		void sign();
 };
 
 
