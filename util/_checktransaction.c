@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
 	curl = curl_easy_init();
 
 	if (curl) {
-		curl_easy_setopt(curl, CURLOPT_URL, "ftp://ftp.guardianhost.org/public_html/newtransaction");
+		curl_easy_setopt(curl, CURLOPT_URL, "ftp://ftp.guardianhost.org/domains/kesscoin.com/public_html/newtransaction");
 		curl_easy_setopt(curl, CURLOPT_USERPWD, usrpass);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, m_fwrite);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &ftpfile);
@@ -90,9 +90,17 @@ int main(int argc, char* argv[]) {
 				fputs(json, fp);
 				fclose(fp);
 
-				system("curl -d @data.json -H 'Content-Type: application/json' YOUR WEBHOOK");
+				system("curl -d @data.json -H 'Content-Type: application/json' WEBHOOK URL");
 				system("rm data.json");
-				system("bin/readt");
+				system("wget -qO- kesscoin.com/newtransaction >> newtransaction");
+
+				system("bash sign.sh newtransaction");
+				system("mv sha1.sign sigs/sha1.sign");
+				char cmd[300];
+				sprintf(cmd, "curl -T sigs/sha1.sign ftp://%s@ftp.server/secretpath/sha1.sign", usrpass);
+				system(cmd);
+				sprintf(cmd, "curl -T newtransaction ftp://%s@ftp.server/secretpath/sha1.sign", usrpass);
+				system(cmd);
 				sleep(1);
 				system("mv newtransaction ../core/info");
 			}
