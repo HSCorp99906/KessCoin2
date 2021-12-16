@@ -57,7 +57,6 @@ void Transaction::sign() {
 	char cmd[150];
 	sprintf(cmd, "echo \"%s\" > tmp/transactionhash", this -> get_hash());
 	system(cmd);
-	system("bash keygen.sh");
 	system("bash sign.sh tmp/transactionhash");
-	system("rm keys/*");
+	system("mv tmp/transactionhash sha1.sign ../../util/");
 }

@@ -1,41 +1,69 @@
 <html>
-    <head>
-        <title>Transaction Center</title> 
+	<head>
+		<title>Wallet</title>
+	
+		<style>
+			#pk {
+				filter: blur(4px);
+				cursor: pointer;
+				transition: 1.5s
+			}
+
+			#pk:hover {
+				filter: blur(0px);
+			}
+		</style>
+
         <script>
             // Frees resources if user closes
             window.onbeforeunload = () => {
                 const xhr = new XMLHttpRequest();
                 xhr.open("GET", "/freetransaction.php");
                 xhr.send(null);
-		        document.cookie = 'tcansend=; Max-Age=0; path=/; domain=' + location.host;
+		       document.cookie = 'tcansend=; Max-Age=0; path=/; domain=' + location.host;
             }
 
-	        let confirmtransaction = () => {
-		        if (!(window.confirm("Are you sure you want to make a transaction?"))) {
-			        document.cookie = "confirm=false";
-	 	        } else {
-			        document.cookie = "confirm=true";
-		        }
-	        }
+	       let confirmtransaction = () => {
+		       if (!(window.confirm("Are you sure you want to make a transaction?"))) {
+			       document.cookie = "confirm=false";
+		       } else {
+			       document.cookie = "confirm=true";
+		       }
+	       }
         </script>
 
+	</head>
+
+	<body>
 		<?php
-		    if (isset($_COOKIE['visited'])) {   // Prevents re-visiting after awhile.
-			header("Location: /");
-		    }
+			session_start();
+			$correct_token = $_SESSION["privkey"] == "5KbDjRoof8PX84KebRZd3oehNnAHgU5WkW9NM5rEy3k1yXNXz9m";
+
+			if (!(isset($_SESSION["username"]) || !(correct_token))) {
+				header("Location: /401.html");
+			}
+
+			$pubkey = $_SESSION["pubkey"];
+
 		?>
 
-    </head>
+		
+		<h1>Wallet</h1>
 
-    <body>
+		<div class="wallet-info">
+			<p>Private Key</p>
+			<input id="pk" value=<?php echo $_SESSION['privkey'] ?> readonly>	
+			<h4>Your public key is: <?php echo $_SESSION['pubkey']?></h4>
+			<h4>Your balance is: <?php echo file_get_contents("../secrets/$pubkey/balance.bal", true);?></h4>
+		</div>
+		<br><br><br>
 
-        <h1>Once form is complete, wait up to a minute for transaction to process.<br>Please Do not close tab.</h1>
-
-        <form method="post">
+		<h1>Send Transaction</h1>
+		<form method="post">
             <label for="to-address">To Address</label>
             <input type="text" name="ta"><br>
             <label for="from-address">From Address</label>
-            <input type="text" name="fa"><br>
+            <input type="text" value="<?php echo $_SESSION['pubkey'];?>" name="fa" readonly><br>
             <label for="amount">Amount</label>
             <input type="text" name="amt"><br>
             <button type="submit" id="submit" style="border-radius: 500px" onclick="confirmtransaction()">Submit</button>
@@ -49,20 +77,21 @@
 
         <?php
             $lenta = strlen($_POST["ta"]);
-            $lenfa = strlen($_POST["fa"]);
+            $lenfa = strlen($_SESSION["pubkey"]);
+			$amt = $_POST["amt"];
             $error = false;
         ?>
 
-        <?php if ($lenta != 64 and $lenta > 0 or lenfa != 64 and lenfa > 0) {
+        <?php if ($lenta != 34 && $lenta > 0 || $lenta > 34) {
             $error = true;
             ?>
-            <h1 style="background-color: rgb(255, 0, 0)">INVALID TO/FROM ADDRESS.</h1>
+            <h1 style="background-color: rgb(255, 0, 0)">INVALID TO ADDRESS/AMOUNT.</h1>
         <?php
-            } elseif (!($error) && $lenfa == 64 && $lenta == 64 && $_COOKIE['confirm'] == "true" && !(isset($_COOKIE['visited']))) {
+            } elseif (!($error) && $lenta == 34 && $_COOKIE['confirm'] == "true" && !(isset($_COOKIE['visited']))) {
                 $transaction = fopen("newtransaction", "a");
                 $tinfo = $_POST['ta'];
                 $tinfo .= PHP_EOL;
-                $tinfo .= $_POST['fa'];
+                $tinfo .= $_SESSION["pubkey"];
                 $tinfo .= PHP_EOL;
                 $tinfo .= $_POST['amt'];
 
@@ -75,7 +104,7 @@
 				$cur_id = rand();
 				$rn1 = rename("../secrets/sha1.sign", "../secrets/sha1-$cur_id-$fa.sign");
 				$rn2 = rename("../secrets/newtransaction", "../secrets/transaction-$cur_id-$fa");
-		
+
 				if (rn1 == false || rn2 == false) {
 					echo "<br>ERROR</br>";
 				}
@@ -88,5 +117,6 @@
 			}
         ?>
 
-    </body>
+		<br><br><a href="/logout.php">Logout</a>
+	</body>
 </html>
