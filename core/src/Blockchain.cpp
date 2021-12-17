@@ -7,7 +7,7 @@ Blockchain::Blockchain() {
 	this -> temp_node = this -> current_node;
 	this -> current_node -> next = NULL;
 	this -> tempStorageActive = false;
-	
+
 	std::ifstream blockno;
 	blockno.open("../info/blockinfo/blockno");
 
@@ -91,6 +91,7 @@ void Blockchain::increment_height() {
 	std::ofstream of;
 	of.open("../info/blockinfo/blockno");
 	of << ++this -> height;
+	of << std::to_string(this -> height);  // Updates the height.
 	of.close();
 }
 
@@ -102,6 +103,18 @@ void Blockchain::mine_pending_transactions() {
 
 	newBlock -> mine(4);  // 2 for now.
 	this -> add_block(newBlock);
+
+	std::ofstream blockout;
+	char blockpath[250];
+
+	sprintf(blockpath, "../info/blockinfo/blocks/block-%d", this -> height);
+	blockout.open(blockpath, std::ios_base::app);
+
+	blockout << newBlock -> gethash();
+	blockout << newBlock -> get_prev_hash();
+	blockout << newBlock -> get_timestamp();
+	blockout.close(); 
+
 	std::cout << "\n********** BLOCK ADDED TO BLOCKCHAIN **********" << std::endl;
 	std::cout << "Hash: " << newBlock -> gethash() << std::endl;
 	std::cout << "Previous Hash: " << newBlock -> get_prev_hash() << std::endl;
