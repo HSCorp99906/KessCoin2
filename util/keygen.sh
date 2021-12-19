@@ -1,2 +1,2 @@
-openssl genrsa -out keys/private.pem 4095
-openssl rsa -in keys/private.pem -pubout > keys/public.pem
+openssl ecparam -name secp256k1 -genkey -noout -out keys/private.pem
+openssl ec -in keys/private.pem -pubout > keys/public.pem
