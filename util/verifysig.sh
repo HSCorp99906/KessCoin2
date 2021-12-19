@@ -1,1 +1,1 @@
-openssl dgst -sha1 -verify keys/public.pem -signature sigs/sha1.sign $1
+openssl dgst -sha1 -verify keys/public.pem -signature signature.bin < $1

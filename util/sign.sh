@@ -1,1 +1,2 @@
-openssl dgst -sha1 -sign keys/private.pem -out sha1.sign $1
+openssl dgst -sha1 -sign keys/private.pem < $1 > signature.bin
+
