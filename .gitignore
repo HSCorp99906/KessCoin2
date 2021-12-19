@@ -1,1 +1,3 @@
 util/checktransaction.c
+core/src/bin
+util/bin
