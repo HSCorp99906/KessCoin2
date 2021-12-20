@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>Wallet</title>
-		<meta name="description" content="KessCoin Wallet">
+		<meta property="og:description" content="KessCoin Wallet. Login before accessing this page.">
 	
 
 		<style>
@@ -98,7 +98,8 @@
             <h1 style="background-color: rgb(255, 0, 0)">INVALID TO-ADDR/FROM-ADDR/AMOUNT</h1>
         <?php
 			} elseif (!($error) && $lenta == 34 && $_COOKIE['confirm'] == "true" && !(isset($_COOKIE['visited']))) {
-				srand(date());
+				srand(mktime());
+				$cur_id = rand();
                 $transaction = fopen("newtransaction", "a");
                 $tinfo = $_POST['ta'];
                 $tinfo .= PHP_EOL;
@@ -106,7 +107,7 @@
                 $tinfo .= PHP_EOL;
 				$tinfo .= $_POST['amt'];
 				$tinfo .= PHP_EOL;
-				$tinfo .= rand() + rand();
+				$tinfo .= $cur_id;
 
 				$fa = $_POST['fa'];
 
@@ -114,7 +115,6 @@
                 fclose($transaction);
                 sleep(20);
                 unlink("newtransaction");
-				$cur_id = rand();
 				$rn2 = rename("../secrets/newtransaction", "../secrets/transaction-$cur_id-$fa");
 
 				if (rn1 == false || rn2 == false) {
@@ -130,33 +130,16 @@
 
 			$addr = $_SESSION["pubkey"];
 
-			$files = glob("../secrets/*$addr");
+			$files = glob("../secrets/*-$addr");
 			$transactionData = array();
-			foreach($files as $file) {
-				$handle = fopen($file, "r");
-				$content = null;
-
-				print_r($file);
-
-				while (!(feof($handle))) {
-					$content = fgets($handle);
-					array_push($transactionData, $content);
-				}
-
-				fclose($handle);
-			}
+			$content = null;
 	?>
 
 		<br><br>
 
 		<h1>Pending Transactions</h1>
 		<div id="transactions">
-
-			<?php
-				$thingidx = 0;  // 1: TO_ADDRESS, 2: FROM_ADDRESS, 3: AMOUNT
-			?>
-		
-			<h1><?php foreach($transactionData as $t) { if ($thingidx == 1) { echo "TO_ADDRESS: $t<br>"; } else if ($thingidx == 2) { echo "FROM ADDRESS: $t<br>"; } else if ($thingidx == 3) { echo "AMOUNT: $t KC<br>";} else if ($thingidx == 4) { echo "ID: $t<br>"; } $thingidx++;continue; }?></h1>
+				<h1><?php  foreach($files as $file) { $handle = fopen($file, "r");$content = fgets($handle);echo "TO ADDRESS: $content<br>";$content = fgets($handle); echo "FROM ADDRESS: $content<br>";$content = fgets($handle);echo "AMOUNT: $content KC<br>";$content = fgets($handle); echo "ID: $content<br><br>";fclose($handle); } ?><h1>
 		</div>	
 
 		<br><br><a href="/logout.php">Logout</a>
