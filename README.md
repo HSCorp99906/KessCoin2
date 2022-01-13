@@ -12,7 +12,7 @@ We do not share transactions with the internet so you can stay anonymous!
 
 Your transaction gets processed and put into a buffer, once that buffer fills up it gets pushed
 to the blockchains pending transactions list, then those pending transactions get pushed into a block.
-That’s where the Proof Of Work algorithm comes in, we use what’s called a nonce and change it until we get the write hash.
+That’s where the Proof Of Work algorithm comes in, we use what’s called a nonce and change it until we get the right hash.
 
 That’s called mining, once the block is mined you get a reward of 5 **KC** and the block is added to the blockchain.
 
